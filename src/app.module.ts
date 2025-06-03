@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { CurrentUserMiddleware } from './utility/middlewares/current-user-middleware';
 import { CategoriesModule } from './categories/categories.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CategoriesModule } from './categories/categories.module';
     }),
     UsersModule,
     CategoriesModule,
+    ProductsModule,
   ],
   controllers: [],
   providers: [],
