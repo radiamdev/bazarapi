@@ -1,23 +1,27 @@
-import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
-import { ValidationPipe } from '@nestjs/common'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule)
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
-    app.setGlobalPrefix('api/v1')
+    const app = await NestFactory.create(AppModule);
+    
+    // Set global prefix as a static path
+    app.setGlobalPrefix('api/v1', { exclude: ['/'] }); // Exclude root path if needed
+    
+    // Apply global validation pipe
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
-    // Configuration de Swagger
+    // Swagger configuration
     const config = new DocumentBuilder()
         .setTitle('BAZARAPI')
         .setDescription('Ceci est la description de bazarapi')
         .setVersion('1.0')
-        .addTag('home') // Optionnel : ajoute des tags pour organiser
-        .build()
-    const document = SwaggerModule.createDocument(app, config)
-    SwaggerModule.setup('api', app, document) // 'api' est le chemin pour accéder à Swagger (ex. : http://localhost:3000/api)
+        .addTag('home')
+        .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document); // Swagger endpoint at /api
 
-    await app.listen(process.env.PORT ?? 3000)
+    await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap()
+bootstrap();
