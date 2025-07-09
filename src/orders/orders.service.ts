@@ -110,7 +110,7 @@ export class OrdersService {
             order.status === OrderStatus.PROCESSING &&
             updateOrderStatusDto.status != OrderStatus.SHIPPED
         ) {
-            throw new BadRequestException(`Delivery before shipped !!!`)
+            throw new BadRequestException(`Order must be shipped before delivered !!!`)
         }
 
         if (
