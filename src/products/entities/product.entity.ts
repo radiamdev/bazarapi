@@ -1,4 +1,5 @@
 import { CategoryEntity } from 'src/categories/entities/category.entity'
+import { OrdersProductsEntity } from 'src/orders/entities/orders-products.entity'
 import { ReviewEntity } from 'src/reviews/entities/review.entity'
 import { UserEntity } from 'src/users/entities/user.entity'
 import {
@@ -6,6 +7,7 @@ import {
     CreateDateColumn,
     Entity,
     ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     Timestamp,
     UpdateDateColumn,
@@ -45,4 +47,7 @@ export class ProductEntity {
 
     @ManyToOne(() => ReviewEntity, (rev) => rev.product)
     reviews: ReviewEntity[]
+
+    @OneToMany(() => OrdersProductsEntity, (op) => op.product)
+    products: OrdersProductsEntity[]
 }
